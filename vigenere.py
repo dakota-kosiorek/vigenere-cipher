@@ -4,7 +4,7 @@ import re
 def encrypt(plain_text: str, key: str):
     regex = re.compile('[^a-zA-Z]')
     plain_text = regex.sub('', plain_text).lower()
-    key = key.sub('', key).lower()
+    key = regex.sub('', key).lower()
     
     long_key = ''
     long_key = (len(plain_text) // len(key)) * key
@@ -20,7 +20,8 @@ def encrypt(plain_text: str, key: str):
     return cipher_text
 
 def decrypt(cipher_text: str, key: str):
-    key = key.sub('', key).lower()
+    regex = re.compile('[^a-zA-Z]')
+    key = regex.sub('', key).lower()
     long_key = ''
     long_key = (len(cipher_text) // len(key)) * key
     long_key += key[:len(cipher_text) - len(long_key)]
@@ -33,8 +34,8 @@ def decrypt(cipher_text: str, key: str):
 
     return decrypted_text
 
-text = 'This is a really cool Python script!'
-key = 'CIPHER'
+text = 'This is a secret message.'
+key = 'code'
 
 encrypted = encrypt(text, key)
 decrypted = decrypt(encrypted, key)
